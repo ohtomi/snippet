@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+
+# https://google.github.io/styleguide/shell.xml
+# https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46
+
+version=0.0.1
+
+function usage {
+  echo -e "$(cat <<EOF
+$(basename ${BASH_SOURCE}) is a tool for ...
+
+\e[1mVERSION\e[0m
+  $(basename ${BASH_SOURCE})/${version}
+
+\e[1mUSAGE\e[0m
+  $ $(basename ${BASH_SOURCE})
+
+\e[1mOPTIONS\e[0m
+  --host  Host name of HTTP server. (default: localhost)
+  --port  Port number. (default: 8080)
+
+\e[1mEXAMPLES\e[0m
+  $ $(basename ${BASH_SOURCE})
+  ...
+
+  # specify host and port
+  $ $(basename ${BASH_SOURCE}) --host foo.example.com --port 80
+  ...
+EOF
+)\n"
+}
+
+function version {
+  echo "$(basename ${BASH_SOURCE}) version ${version}"
+}
+
+# --------------------------------------
+# logger
+# --------------------------------------
+
+# text attributes
+normal=0
+bold=1
+underscore=4
+
+# foreground colors
+black=30
+red=31
+green=32
+yellow=33
+blue=34
+magenta=35
+cyan=36
+white=37
+
+function cecho {
+  attribute=$1
+  shift
+  foreground=$1
+  shift
+  echo -e "\033[${attribute};${foreground}m$@\033[0;m\n"
+}
+
+function log_error {
+  error_code=$1
+  error_title=$2
+  error_description=$3
+  fix_with=$4
+  other_messages=$5
+  cecho $normal $green "$(cat <<EOT
+Error: ${error_code} - ${error_title}
+${error_description}
+Fix with: ${fix_with}
+${other_messages}
+EOT
+)"
+}
+
+# --------------------------------------
+# options
+# --------------------------------------
+host="localhost"
+port=8080
+
+function parse_options {
+  if [[ $# -eq 0 ]]; then
+    usage
+    exit 1
+  fi
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+
+      --host)
+        host=$2
+        shift
+      ;;
+
+      --port)
+        port=$2
+        shift
+      ;;
+
+      --trace)
+        set -xue
+      ;;
+
+      --debug|-d)
+        trap 'read -p "(${BASH_SOURCE}:${LINENO}) $BASH_COMMAND"' DEBUG
+      ;;
+
+      help|--help|-h)
+        usage
+        exit 1
+      ;;
+
+      version|--version|-v)
+        version
+        exit 1
+      ;;
+
+      *)
+        cecho $normal $green "Error: Invalid option '${1}'"
+        usage
+        exit 1
+      ;;
+    esac
+    shift
+  done
+}
+
+# --------------------------------------
+# main command
+# --------------------------------------
+function main {
+  parse_options $@
+  ret=$?
+  if [[ $ret -ne 0 ]]; then
+    exit $ret
+  fi
+
+  cecho $underscore $cyan "host is ${host}, port is ${port}."
+}
+
+# --------------------------------------
+
+main $@
