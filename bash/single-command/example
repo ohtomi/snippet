@@ -79,15 +79,10 @@ EOT
 # --------------------------------------
 # options
 # --------------------------------------
-host="localhost"
-port=8080
+host="${EXAMPLE_HOST:-localhost}"
+port=${EXAMPLE_PORT:-8080}
 
 function parse_options {
-  if [[ $# -eq 0 ]]; then
-    usage
-    exit 1
-  fi
-
   while [[ $# -gt 0 ]]; do
     case $1 in
 
