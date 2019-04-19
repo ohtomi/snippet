@@ -43,3 +43,7 @@ host is foo.bar.baz, port is 80.
 $ EXAMPLE_HOST=foo.bar.baz EXAMPLE_PORT=80 bash example
 host is foo.bar.baz, port is 80.
 ```
+
+## Links
+- [Shell Style Guide - Google Style Guides | styleguide](https://google.github.io/styleguide/shell.xml)
+- [12 Factor CLI Apps – Jeff Dickey – Medium](https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46)
