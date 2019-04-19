@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# https://google.github.io/styleguide/shell.xml
-# https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46
-
 version=0.0.1
 
 function usage {
@@ -34,51 +31,6 @@ function version {
   echo "$(basename ${BASH_SOURCE}) version ${version}"
 }
 
-# --------------------------------------
-# logger
-# --------------------------------------
-
-# text attributes
-normal=0
-bold=1
-underscore=4
-
-# foreground colors
-black=30
-red=31
-green=32
-yellow=33
-blue=34
-magenta=35
-cyan=36
-white=37
-
-function cecho {
-  attribute=$1
-  shift
-  foreground=$1
-  shift
-  echo -e "\033[${attribute};${foreground}m$@\033[0;m\n"
-}
-
-function log_error {
-  error_code=$1
-  error_title=$2
-  error_description=$3
-  fix_with=$4
-  other_messages=$5
-  cecho $normal $green "$(cat <<EOT
-Error: ${error_code} - ${error_title}
-${error_description}
-Fix with: ${fix_with}
-${other_messages}
-EOT
-)"
-}
-
-# --------------------------------------
-# options
-# --------------------------------------
 host="${EXAMPLE_HOST:-localhost}"
 port=${EXAMPLE_PORT:-8080}
 
@@ -115,7 +67,7 @@ function parse_options {
       ;;
 
       *)
-        cecho $normal $green "Error: Invalid option '${1}'"
+        echo -e "\033[32mError: Invalid option '${1}'\033[m\n"
         usage
         exit 1
       ;;
@@ -124,9 +76,6 @@ function parse_options {
   done
 }
 
-# --------------------------------------
-# main command
-# --------------------------------------
 function main {
   parse_options $@
   ret=$?
@@ -134,9 +83,7 @@ function main {
     exit $ret
   fi
 
-  cecho $underscore $cyan "host is ${host}, port is ${port}."
+  echo -e "\033[4;36mhost is ${host}, port is ${port}.\033[m\n"
 }
 
-# --------------------------------------
-
-main $@
+main "$@"
