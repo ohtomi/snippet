@@ -11,6 +11,17 @@ https://github.com/jdxcode/myapp
 XXXX YYYY ZZZZ
 ```
 
+```console
+$ bash ansi-escape/choice.sh
+Select one option using up/down keys and enter to confirm:
+   one
+   two
+  [three]
+
+Choosen index = 2
+        value = three
+```
+
 ## Links
 - [ANSI escape code - Wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code)
 - [ctlseqs(ms)](https://invisible-island.net/xterm/ctlseqs/ctlseqs.html)
