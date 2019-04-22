@@ -12,7 +12,7 @@ XXXX YYYY ZZZZ
 ```
 
 ```console
-$ bash ansi-escape/choice.sh
+$ bash choice.sh
 Select one option using up/down keys and enter to confirm:
    one
    two
