@@ -24,7 +24,7 @@ $(basename ${BASH_SOURCE}) is a tool for ...
   $ $(basename ${BASH_SOURCE}) --host foo.example.com --port 80
   ...
 EOF
-)\n"
+)\n" >&2
 }
 
 function version {
@@ -67,7 +67,7 @@ function parse_options {
       ;;
 
       *)
-        echo -e "\033[32mError: Invalid option '${1}'\033[m\n"
+        echo -e "\033[32mError: Invalid option '${1}'\033[m\n" >&2
         usage
         exit 1
       ;;
