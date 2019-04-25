@@ -136,7 +136,7 @@ ${error_description}
 Fix with: ${fix_with}
 ${other_messages}
 EOT
-)\n$(text_reset)"
+)\n$(text_reset)" >&2
 }
 
 log_error \
