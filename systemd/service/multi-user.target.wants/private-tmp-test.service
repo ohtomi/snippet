@@ -1,0 +1,10 @@
+[Unit]
+Description=PrivateTmp test
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/private-tmp-test.sh
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target
