@@ -1,0 +1,9 @@
+[Unit]
+Description=custom batch timer
+
+[Timer]
+OnCalendar=*:0/1
+Unit=custom-batch.service
+
+[Install]
+WantedBy=multi-user.target

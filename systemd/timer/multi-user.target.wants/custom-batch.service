@@ -1,0 +1,9 @@
+[Unit]
+Description=custom batch service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/echo-foo-bar-baz.sh
+
+[Install]
+WantedBy=multi-user.target
